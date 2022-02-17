@@ -1,5 +1,5 @@
 <?php
-/**
+/** 
 * Copy a file, or recursively copy a folder and its contents
 * @author Aidan Lister <aidan@php.net>
     * @version 1.0.1
@@ -72,14 +72,14 @@ function hashDirectory($directory){
     return md5(implode('', $files));
 }      
 
-$new_block = dirname(__FILE__) . "/src/blocks/" . $argv[1];
+$new_block = dirname(__FILE__) . "/src/blocks/" . $args[0];
 $boilerplate = dirname(__FILE__) . "\src\boilerplate";
     
 xcopy($boilerplate, $new_block);
 
-rename(realpath(dirname(__FILE__)) . '/src/blocks/' . $argv[1] . '/boilerplate.js', realpath(dirname(__FILE__)) . '/src/blocks/' . $argv[1] . '/' . $argv[1] . '.js');
-rename(realpath(dirname(__FILE__)) . '/src/blocks/' . $argv[1] . '/boilerplate.scss', realpath(dirname(__FILE__)) . '/src/blocks/' . $argv[1] . '/' . $argv[1] . '.scss');
-rename(realpath(dirname(__FILE__)) . '/src/blocks/' . $argv[1] . '/boilerplate.php', realpath(dirname(__FILE__)) . '/src/blocks/' . $argv[1] . '/' . $argv[1] . '.php');
+rename(realpath(dirname(__FILE__)) . '/src/blocks/' . $args[0] . '/boilerplate.js', realpath(dirname(__FILE__)) . '/src/blocks/' . $args[0] . '/' . $args[0] . '.js');
+rename(realpath(dirname(__FILE__)) . '/src/blocks/' . $args[0] . '/boilerplate.scss', realpath(dirname(__FILE__)) . '/src/blocks/' . $args[0] . '/' . $args[0] . '.scss');
+rename(realpath(dirname(__FILE__)) . '/src/blocks/' . $args[0] . '/boilerplate.php', realpath(dirname(__FILE__)) . '/src/blocks/' . $args[0] . '/' . $args[0] . '.php');
 
 function replace_string_in_file($filename, $string_to_replace, $replace_with){
     $content = file_get_contents($filename);
@@ -88,16 +88,16 @@ function replace_string_in_file($filename, $string_to_replace, $replace_with){
     file_put_contents($filename, $content);
     }
 
-$filename_php = realpath(dirname(__FILE__)) . '/src/blocks/' . $argv[1] . '/' . $argv[1] . '.php';
+$filename_php = realpath(dirname(__FILE__)) . '/src/blocks/' . $args[0] . '/' . $args[0] . '.php';
 $string_to_replace = "boilerplate";
-$replace_with_php = str_replace("-", "_", $argv[1]);
+$replace_with_php = str_replace("-", "_", $args[0]);
 
-$filename_js= realpath(dirname(__FILE__)) . '/src/blocks/' . $argv[1] . '/' . $argv[1] . '.js';
-$replace_with_js = $argv[1];
+$filename_js= realpath(dirname(__FILE__)) . '/src/blocks/' . $args[0] . '/' . $args[0] . '.js';
+$replace_with_js = $args[0];
 
 replace_string_in_file($filename_php, $string_to_replace, $replace_with_php);
 replace_string_in_file($filename_js, $string_to_replace, $replace_with_js);
 
-$import = "\n\nimport './blocks/" . $argv[1] . "/" . $argv[1] . ".js';
-import './blocks/" . $argv[1] . "/" . $argv[1] . ".scss';";
-file_put_contents(realpath(dirname(__FILE__)) . "/src/index.js", $import, FILE_APPEND);
+$import = "\n\nimport './blocks/" . $args[0] . "/" . $args[0] . ".js';
+import './blocks/" . $args[0] . "/" . $args[0] . ".scss';";
+file_put_contents(realpath(dirname(__FILE__)) . "/src/index.js", $import, FILE_APPEND); 

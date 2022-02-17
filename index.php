@@ -53,3 +53,28 @@ foreach (scandir(realpath(__DIR__ . "/src/blocks/")) as $folders) {
     }
 }
     
+
+// wp-cli
+
+if ( defined( 'WP_CLI' ) && WP_CLI ) {
+    class WP_CLI_Commands {
+        /**
+         * create/remove blocks CLI
+         * 
+         * ## EXAMPLES
+         *
+         *     wp rgb create
+         *
+         *
+         * @when after_wp_load
+         */
+        function create( $args, $assoc_args ) {
+            require_once(dirname(__FILE__). "/create_block.php");
+        }
+
+        function remove( $args, $assoc_args ) {
+            require_once(dirname(__FILE__). "/remove_block.php");
+        }
+    }
+    WP_CLI::add_command( 'rgb', 'WP_CLI_Commands' );
+}

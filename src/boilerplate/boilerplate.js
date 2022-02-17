@@ -1,6 +1,10 @@
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
 const { Component } = wp.element; // Import the Component base class from the React.js abstraction
+const { InspectorControls, InnerBlocks, MediaUpload, MediaUploadCheck } =
+    wp.editor;
+
+import Edit from "./edit.js";
 
 registerBlockType("svjat-r-g-b/boilerplate", {
     // Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
@@ -19,44 +23,7 @@ registerBlockType("svjat-r-g-b/boilerplate", {
             type: "string",
         },
     },
-    edit: (props) => {
-        let cats = [];
-        let selectedCat;
-
-        wp.apiFetch({
-            url: "/wp-json/wp/v2/categories",
-        }).then((categories) => {
-            props.setAttributes({
-                categories: categories,
-            });
-        });
-
-        if (props.attributes.categories) {
-            cats = props.attributes.categories;
-            selectedCat = props.attributes.selectedCategory;
-        }
-
-        function updateCategory(e) {
-            props.setAttributes({
-                selectedCategory: e.target.value,
-            });
-        }
-
-        return (
-            <div>
-                <select onChange={updateCategory} value={selectedCat}>
-                    {cats.map((cat) => {
-                        return (
-                            <option value={cat.id} key={cat.id}>
-                                {cat.name}
-                            </option>
-                        );
-                    })}
-                </select>
-                <input type="text" placeholder=""></input>
-            </div>
-        );
-    },
+    edit : Edit,
     save: function (props) {
         return null;
     },
